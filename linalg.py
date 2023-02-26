@@ -12,7 +12,9 @@ b = np.array([6, 3, 14, 8], dtype=np.dtype(int))
 
 ### START CODE HERE ###
 # determinant of matrix A
-d = np.linalg.det(A)
+d = float(np.linalg.det(A))
+
+print(type(d))
 
 # solution of the system of linear equations 
 # with the corresponding coefficients matrix A and free coefficients b
