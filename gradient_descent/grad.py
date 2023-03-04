@@ -12,10 +12,9 @@ def plot_grad_line_at(val, fn):
     
     def lineFn(var):
         grad = gradient_at(val, fn).astype(float)
-        print(grad)
-        return grad*var + fn(var)
+        return grad*(var - val) + fn(val)
     
-    plt.plot([val], [fn(val)], 'ro')
+    plt.plot([val], [fn(val)], 'o')
     plt.plot([val - l_width, val + l_width], [lineFn(val - l_width), lineFn(val + l_width)])
 
 
@@ -29,6 +28,7 @@ plt.figure(figsize=[8,8])
 
 plt.plot(x, basic_quad(x))
 
-plot_grad_line_at(2.4, basic_quad)
+for k in np.arange(0, 10, 1.25):
+    plot_grad_line_at(k, basic_quad)
 
 plt.show()
