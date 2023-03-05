@@ -1,5 +1,5 @@
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 
 def gradient_at(val, fn):
     epsilon = 0.0000001
@@ -31,19 +31,3 @@ def gradient_descent(init, l_rate, fn, threshold=0.0000001):
         _iter += 1
     print(f'Iterations = {_iter}')
     return [x, np.array(path)]
-
-
-# Test function
-def basic_quad(x):
-    return (x-3.557)**2 + 1.5568
-
-desc = gradient_descent(15, .1, basic_quad)
-print(f'Minimum is at {desc[0]}')
-
-x = np.linspace(start=-5, stop=15)
-plt.figure(figsize=[8,8])
-plt.plot(x, basic_quad(x))
-for i in desc[1]:
-    plt.plot(i, basic_quad(i), 'ro')
-
-plt.show()
