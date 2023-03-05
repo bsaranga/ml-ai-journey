@@ -4,12 +4,15 @@ import numpy as np
 
 from gradient_descent import grad as g
 
+def fn(x,y):
+    return x**2 + y**2
+
 
 # Make data
 X = np.arange(-5, 5, .1)
 Y = np.arange(-5, 5, .1)
 X, Y = np.meshgrid(X, Y)
-Z = np.sin(abs(X)) + np.cos(abs(Y))
+Z = fn(X,Y)
 
 minimum = [0,0,0]
 
