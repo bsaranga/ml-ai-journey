@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def gradient_at(val, fn):
-    epsilon = 0.000001
+    epsilon = 0.0000001
     precision = np.log10(1/epsilon).astype(int) - 1
     grad = (fn(val + epsilon) - fn(val))/epsilon
     return np.round(grad, precision)
@@ -17,7 +17,7 @@ def plot_grad_line_at(val, fn):
     plt.plot([val], [fn(val)], 'o')
     plt.plot([val - l_width, val + l_width], [lineFn(val - l_width), lineFn(val + l_width)])
 
-def gradient_descent(init, l_rate, fn, threshold=0.00001):
+def gradient_descent(init, l_rate, fn, threshold=0.0000001):
     '''
     Returns the minimum point and the path taken by the gradient
     descent process
@@ -33,19 +33,16 @@ def gradient_descent(init, l_rate, fn, threshold=0.00001):
     return [x, np.array(path)]
 
 
+# Test function
 def basic_quad(x):
     return (x-3.557)**2 + 1.5568
 
-desc = gradient_descent(15, .7, basic_quad)
-
+desc = gradient_descent(15, .1, basic_quad)
 print(f'Minimum is at {desc[0]}')
 
 x = np.linspace(start=-5, stop=15)
-
 plt.figure(figsize=[8,8])
-
 plt.plot(x, basic_quad(x))
-
 for i in desc[1]:
     plt.plot(i, basic_quad(i), 'ro')
 
