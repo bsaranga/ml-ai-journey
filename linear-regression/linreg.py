@@ -18,8 +18,3 @@ Y_norm = (Y - np.mean(Y))/np.std(Y)
 # Cost function
 def E(m, b, X, Y):
     return (1/(2*len(Y))) * np.sum((m*X + b - Y)**2)
-
-print(g.partialDerivative(E, [0,0,X_norm,Y_norm], 0))
-print(g.partialDerivative(E, [0,0,X_norm,Y_norm], 1))
-print(g.partialDerivative(E, [1,5,X_norm,Y_norm], 0))
-print(g.partialDerivative(E, [1,5,X_norm,Y_norm], 1))
