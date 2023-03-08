@@ -19,6 +19,20 @@ def dfdY(val, f):
     grad = (f(val[0], val[1] + epsilon) - f(val[0], val[1]))/epsilon
     return np.round(grad, precision)
 
+def partialDerivative(f, vals, index=0):
+    epsilon = 0.0000001
+    precision = np.log10(1/epsilon).astype(int) - 1
+    grad = None
+    if (index == 0):
+        grad = (f(vals[0] + epsilon, *vals) - f(*vals))/epsilon
+    elif (index == len(vals) - 1):
+        grad = (f(*vals[:-1], vals[-1] + epsilon) - f(*vals))/epsilon
+    else:
+        grad = (f(*vals[:index], vals[index] + epsilon, vals[index+1:]) - f(*vals))/epsilon
+    if (grad != None):
+        return np.round(grad, precision)
+    else: return None
+
 def plot_grad_line_at(val, fn):
     l_width = 2
     
@@ -50,7 +64,7 @@ def gradient_descent2(init, l_rate, fn, threshold=0.0000001):
     path = [[x,y]]
     _iter = 0
 
-    while abs(dfdX([x,y], fn) > threshold) and abs(dfdY([x,y], fn) > threshold):
+    while (abs(dfdX([x,y], fn)) > threshold and abs(dfdY([x,y], fn)) > threshold):
         x = x - l_rate * dfdX([x,y], fn)
         y = y - l_rate * dfdY([x,y], fn)
         path.append([x,y])
