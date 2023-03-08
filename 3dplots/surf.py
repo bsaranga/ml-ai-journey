@@ -7,12 +7,14 @@ from gradient_descent import grad as g
 def fn(x,y):
     return x**2 + y**2
 
+def f_example_3(x,y):
+    return (85+ 0.1*(- 1/9*(x-6)*x**2*y**3 + 2/3*(x-6)*x**2*y**2))
 
 # Make data
-X = np.arange(-5, 5, .1)
-Y = np.arange(-5, 5, .1)
+X = np.linspace(0, 5, 50)
+Y = np.linspace(0, 5, 50)
 X, Y = np.meshgrid(X, Y)
-Z = fn(X,Y)
+Z = f_example_3(X,Y)
 
 minimum = [0,0,0]
 
@@ -23,8 +25,7 @@ ax.set_xlabel('x-axis')
 ax.set_ylabel('y-axis')
 ax.set_zlabel('z-axis')
 
-ax.plot_surface(X, Y, Z, vmin=Z.min() * 2, cmap=cm.Blues, zorder=1)
-
-ax.plot(minimum[0], minimum[1], minimum[2], marker='o', color='red', zorder=10)
+ax.plot_surface(X, Y, Z, antialiased=True, cmap='coolwarm', zorder=1)
+ax.autoscale(enable=False)
 
 plt.show()
