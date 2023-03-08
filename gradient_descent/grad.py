@@ -7,6 +7,18 @@ def gradient_at(val, fn):
     grad = (fn(val + epsilon) - fn(val))/epsilon
     return np.round(grad, precision)
 
+def dfdX(val, f):
+    epsilon = 0.0000001
+    precision = np.log10(1/epsilon).astype(int) - 1
+    grad = (f(val[0] + epsilon, val[1]) - f(val[0], val[1]))/epsilon
+    return np.round(grad, precision)
+
+def dfdY(val, f):
+    epsilon = 0.0000001
+    precision = np.log10(1/epsilon).astype(int) - 1
+    grad = (f(val[0], val[1] + epsilon) - f(val[0], val[1]))/epsilon
+    return np.round(grad, precision)
+
 def plot_grad_line_at(val, fn):
     l_width = 2
     
@@ -31,3 +43,17 @@ def gradient_descent(init, l_rate, fn, threshold=0.0000001):
         _iter += 1
     print(f'Iterations = {_iter}')
     return [x, np.array(path)]
+
+def gradient_descent2(init, l_rate, fn, threshold=0.0000001):
+    x = init[0]
+    y = init[1]
+    path = [[x,y]]
+    _iter = 0
+
+    while abs(dfdX([x,y], fn) > threshold) and abs(dfdY([x,y], fn) > threshold):
+        x = x - l_rate * dfdX([x,y], fn)
+        y = y - l_rate * dfdY([x,y], fn)
+        path.append([x,y])
+        _iter += 1
+    print(f'Iterations = {_iter}')
+    return [[x,y], np.array(path)]
