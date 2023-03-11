@@ -21,16 +21,15 @@ def dfdY(val, f):
 
 def partialDerivative(f, vals, index=0):
     epsilon = 0.0000001
-    precision = np.log10(1/epsilon).astype(int) - 1
     grad = None
     if (index == 0):
-        grad = (f(vals[0] + epsilon, *vals) - f(*vals))/epsilon
+        grad = (f(vals[0] + epsilon, *vals[1:]) - f(*vals))/epsilon
     elif (index == len(vals) - 1):
         grad = (f(*vals[:-1], vals[-1] + epsilon) - f(*vals))/epsilon
     else:
-        grad = (f(*vals[:index], vals[index] + epsilon, vals[index+1:]) - f(*vals))/epsilon
+        grad = (f(*vals[:index], vals[index] + epsilon, *vals[index+1:]) - f(*vals))/epsilon
     if (grad != None):
-        return np.round(grad, precision)
+        return grad
     else: return None
 
 def plot_grad_line_at(val, fn):
@@ -71,3 +70,19 @@ def gradient_descent2(init, l_rate, fn, threshold=0.0000001):
         _iter += 1
     print(f'Iterations = {_iter}')
     return [[x,y], np.array(path)]
+
+
+def gradient_descent3(init, l_rate, fn, indices=[0,1], threshold=0.0000001**2):
+    PDparams = [init[indices[0]], init[indices[1]]]
+    PDparams.extend(init[len(indices):])
+    path = [[PDparams[0],PDparams[1]]]
+    _iter = 0
+
+    while (abs(partialDerivative(fn, PDparams, indices[0])) > threshold and abs(partialDerivative(fn, PDparams, indices[1])) > threshold):
+        PDparams[0] = PDparams[0] - l_rate * partialDerivative(fn, PDparams, indices[0])
+        PDparams[1] = PDparams[1] - l_rate * partialDerivative(fn, PDparams, indices[1])
+        path.append([PDparams[0],PDparams[1]])
+        _iter += 1
+        
+    print(f'Iterations = {_iter}')
+    return [[PDparams[0],PDparams[1]], np.array(path)]
