@@ -1,8 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def gradient_at(val, fn):
-    epsilon = 0.0000001
+def gradient_at(val, fn, epsilon=0.0000001):
     precision = np.log10(1/epsilon).astype(int) - 1
     grad = (fn(val + epsilon) - fn(val))/epsilon
     return np.round(grad, precision)
