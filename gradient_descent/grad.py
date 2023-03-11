@@ -6,6 +6,11 @@ def gradient_at(val, fn, epsilon=0.0000001):
     grad = (fn(val + epsilon) - fn(val))/epsilon
     return np.round(grad, precision)
 
+def second_derivative_at(val, fn, epsilon=0.0000001):
+    precision = np.log10(1/epsilon).astype(int) - 1
+    grad = (fn(val + epsilon) - 2*fn(val) + fn(val - epsilon))/epsilon**2
+    return np.round(grad, precision)
+
 def dfdX(val, f):
     epsilon = 0.0000001
     precision = np.log10(1/epsilon).astype(int) - 1
