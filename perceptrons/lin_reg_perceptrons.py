@@ -80,7 +80,7 @@ def nn_model(X, Y, iterations=10, learning_rate=1.2, print_cost=False):
     
     return parameters
 
-out = nn_model(X_norm, Y_norm, 10, learning_rate=.8, print_cost=True)
+out = nn_model(X_norm, Y_norm, 10, learning_rate=.8, print_cost=False)
 
 print(out["W"])
 print(out["b"])
