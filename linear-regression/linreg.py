@@ -20,5 +20,10 @@ Y_norm = (Y - np.mean(Y))/np.std(Y)
 def E(m, b, X, Y):
     return (1/(2*len(Y))) * np.sum((m*X + b - Y)**2)
 
-result, path = g.gradient_descent3([0,0,X_norm,Y_norm], 1.2, E, [0,1])
-print(result)
+result, path = g.gradient_descent3([0,0,X_norm,Y_norm], 0.1, E, [0,1])
+m = result[0]
+b = result[1]
+
+plt.scatter(X_norm, Y_norm)
+plt.plot(X_norm, m*X_norm + b, color='red')
+plt.show()
