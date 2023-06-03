@@ -84,3 +84,5 @@ out = nn_model(X_norm, Y_norm, 10, learning_rate=.8, print_cost=False)
 
 print(out["W"])
 print(out["b"])
+
+print(np.ones((2,2000)))
