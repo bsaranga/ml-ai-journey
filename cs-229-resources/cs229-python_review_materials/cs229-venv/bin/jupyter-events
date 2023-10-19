@@ -1,0 +1,8 @@
+#!/home/bsaranga/repos/ml-ai-journey/cs-229-resources/cs229-python_review_materials/cs229-venv/bin/python3.11
+# -*- coding: utf-8 -*-
+import re
+import sys
+from jupyter_events.cli import main
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(main())
