@@ -9,3 +9,7 @@ Workings of deeplearning.ai courses
 - Supervised Learning Cheatsheet: https://stanford.edu/~shervine/teaching/cs-229/cheatsheet-supervised-learning
 - CS229 Syllabus Fall 2023-24: https://docs.google.com/spreadsheets/d/1sEu4ygD5HWxaqjvbR2nsjvG6NBoW5tRW/edit#gid=348511794
 - Main Notes (2022 Fall): https://cs229.stanford.edu/notes2022fall/main_notes.pdf
+
+# Tubingen Machine Learning
+
+- YT Playlist: https://www.youtube.com/playlist?list=PL05umP7R6ij35ShKLDqccJSDntugY4FQT
