@@ -2,12 +2,12 @@
 import { RemoteRunnable } from 'langchain/runnables/remote'
 
 const chat = new RemoteRunnable({
-  url: "http://localhost:8000/openai"
+  url: "http://localhost:8000/topics"
 });
 
 async function prompt() {
   console.log('Prompting...')
-  const result = await chat.stream({text: "hello world"});
+  const result = await chat.stream({"topic": "atoms", "field": "physics"});
   const reader = result.getReader();
 
   try {

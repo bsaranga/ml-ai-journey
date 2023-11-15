@@ -3,8 +3,39 @@ from fastapi import FastAPI
 from langserve import add_routes
 from langchain.chat_models import ChatOpenAI
 from fastapi.middleware.cors import CORSMiddleware
+from langchain.prompts import ChatPromptTemplate
+from langchain.schema.output_parser import BaseTransformOutputParser
+from signal import signal, SIGTERM
+
+signal(SIGTERM, 0)
 
 load_dotenv()
+
+class StrCollectParser(BaseTransformOutputParser[str]):
+    """OutputParser that parses LLMResult into the top likely string."""
+
+    buffer: str = ""
+
+    @classmethod
+    def is_lc_serializable(cls) -> bool:
+        """Return whether this class is serializable."""
+        return True
+
+    @property
+    def _type(self) -> str:
+        """Return the output parser type for serialization."""
+        return "default"
+
+    def parse(self, text: str) -> str:
+        """Returns the input text with no changes."""
+        buffer += text
+        
+        split = buffer.split(',')
+        
+        if (len(split) > 0):
+            buffer = ""
+            for k in split:
+                return k
 
 app = FastAPI(
     title="LangChain Test Server",
@@ -22,8 +53,10 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-# Edit this to add the chain you want to add
-add_routes(app, ChatOpenAI(model='gpt-3.5-turbo-1106'), path="/openai")
+prompt = ChatPromptTemplate.from_template("give constituent topics of {topic} belonging to the field {field} as CSV only.")
+model = ChatOpenAI(model='gpt-3.5-turbo-1106')
+
+add_routes(app, prompt | model | StrCollectParser(), path="/topics")
 
 if __name__ == "__main__":
     import uvicorn
