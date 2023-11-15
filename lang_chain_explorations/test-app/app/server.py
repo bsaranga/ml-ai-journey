@@ -14,7 +14,7 @@ load_dotenv()
 class StrCollectParser(BaseTransformOutputParser[str]):
     """OutputParser that parses LLMResult into the top likely string."""
 
-    buffer: str = ""
+    buffer: str = ''
 
     @classmethod
     def is_lc_serializable(cls) -> bool:
@@ -28,14 +28,17 @@ class StrCollectParser(BaseTransformOutputParser[str]):
 
     def parse(self, text: str) -> str:
         """Returns the input text with no changes."""
-        buffer += text
+        self.buffer += text
+
+        split = self.buffer.split(',')
         
-        split = buffer.split(',')
-        
-        if (len(split) > 0):
-            buffer = ""
+        if (len(split) > 1):
+            self.buffer = ''
             for k in split:
+                print(k)
                 return k
+        else:
+            return '-'
 
 app = FastAPI(
     title="LangChain Test Server",
