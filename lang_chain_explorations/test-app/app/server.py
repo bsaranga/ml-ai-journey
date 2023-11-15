@@ -23,8 +23,8 @@ app.add_middleware(
 )
 
 # Edit this to add the chain you want to add
-add_routes(app, ChatOpenAI(), path="/openai")
+add_routes(app, ChatOpenAI(model='gpt-3.5-turbo-1106'), path="/openai")
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="localhost", port=8000, workers=4)
