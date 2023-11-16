@@ -34,7 +34,7 @@ app.add_middleware(
 prompt = ChatPromptTemplate.from_template("give constituent topics of {topic} belonging to the field {field} as CSV only.")
 model = ChatOpenAI(model='gpt-3.5-turbo-1106')
 
-add_routes(app, prompt | model | StrOutputParser() | split_into_list, path="/topics")
+add_routes(app, prompt | model | StrOutputParser(), path="/topics")
 
 if __name__ == "__main__":
     import uvicorn
