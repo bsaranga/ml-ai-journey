@@ -1,19 +1,21 @@
-from typing import AsyncIterator, Iterator, List
+from typing import Iterator, List
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from langserve import add_routes
 from langchain.chat_models import ChatOpenAI
 from fastapi.middleware.cors import CORSMiddleware
 from langchain.prompts import ChatPromptTemplate
-from langchain.schema.output_parser import StrOutputParser
+from langchain.schema.output_parser import BaseCumulativeTransformOutputParser
 from signal import signal, SIGTERM
 
 signal(SIGTERM, 0)
 
 load_dotenv()
 
-async def split_into_list(input):
-    yield input
+class MyParser(BaseCumulativeTransformOutputParser):
+    def parse(self, text: str) -> str:
+        if (text.__contains__(',')):
+            return text.split(',')[-1]
 
 app = FastAPI(
     title="LangChain Test Server",
@@ -34,7 +36,7 @@ app.add_middleware(
 prompt = ChatPromptTemplate.from_template("give constituent topics of {topic} belonging to the field {field} as CSV only.")
 model = ChatOpenAI(model='gpt-3.5-turbo-1106')
 
-add_routes(app, prompt | model | StrOutputParser(), path="/topics")
+add_routes(app, prompt | model | MyParser(), path="/topics")
 
 if __name__ == "__main__":
     import uvicorn
