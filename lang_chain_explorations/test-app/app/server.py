@@ -6,6 +6,7 @@ from langchain.chat_models import ChatOpenAI
 from fastapi.middleware.cors import CORSMiddleware
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import BaseCumulativeTransformOutputParser
+from langchain.prompts.chat import SystemMessagePromptTemplate, HumanMessagePromptTemplate
 from signal import signal, SIGTERM
 
 signal(SIGTERM, 0)
@@ -14,8 +15,8 @@ load_dotenv()
 
 class MyParser(BaseCumulativeTransformOutputParser):
     def parse(self, text: str) -> str:
-        if (text.__contains__(',')):
-            return text.split(',')[-1]
+        print(text)
+        return {"topics": text.split(', ')}
 
 app = FastAPI(
     title="LangChain Test Server",
@@ -33,8 +34,11 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-prompt = ChatPromptTemplate.from_template("give constituent topics of {topic} belonging to the field {field} as CSV only.")
-model = ChatOpenAI(model='gpt-3.5-turbo-1106')
+system_message = SystemMessagePromptTemplate.from_template("you are a helpful assistant that return lists of items as comma separated values. each item should be concise as much as possible.")
+human_message = HumanMessagePromptTemplate.from_template("give constituent topics of {topic} belonging to the field {field}.")
+prompt = ChatPromptTemplate.from_messages([system_message, human_message])
+
+model = ChatOpenAI(model='gpt-4-1106-preview')
 
 add_routes(app, prompt | model | MyParser(), path="/topics")
 

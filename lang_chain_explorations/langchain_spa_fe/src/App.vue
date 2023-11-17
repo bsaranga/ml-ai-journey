@@ -5,6 +5,8 @@ import { RemoteRunnable } from 'langchain/runnables/remote'
 const topic = ref<string>('electron');
 const field = ref<string>('physics');
 
+const list = ref(null);
+
 const chat = new RemoteRunnable({
   url: "http://localhost:8000/topics"
 });
