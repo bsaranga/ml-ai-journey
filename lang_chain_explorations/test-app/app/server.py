@@ -35,7 +35,7 @@ app.add_middleware(
 )
 
 system_message = SystemMessagePromptTemplate.from_template("you are a helpful assistant that return lists of items as comma separated values. each item should be concise as much as possible.")
-human_message = HumanMessagePromptTemplate.from_template("give constituent topics of {topic} belonging to the field {field}.")
+human_message = HumanMessagePromptTemplate.from_template("give constituent topics of {topic} belonging to {field}.")
 prompt = ChatPromptTemplate.from_messages([system_message, human_message])
 
 model = ChatOpenAI(model='gpt-4-1106-preview')
