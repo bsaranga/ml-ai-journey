@@ -33,7 +33,9 @@ async function prompt2() {
       if (jsonStr != undefined) {
         const jsonData = JSON.parse(jsonStr);
         console.log(jsonData)
-        list.value = jsonData;
+        if (Object.keys(jsonData).includes('topics')) {
+          list.value = jsonData;
+        }
       }
     }
   }
