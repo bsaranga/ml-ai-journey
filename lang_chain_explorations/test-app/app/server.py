@@ -38,7 +38,7 @@ system_message = SystemMessagePromptTemplate.from_template("you are a helpful as
 human_message = HumanMessagePromptTemplate.from_template("give constituent topics of {topic} belonging to {field}.")
 prompt = ChatPromptTemplate.from_messages([system_message, human_message])
 
-model = ChatOpenAI(model='gpt-4-1106-preview')
+model = ChatOpenAI(model='gpt-4-0613')
 
 add_routes(app, prompt | model | MyParser(), path="/topics")
 
