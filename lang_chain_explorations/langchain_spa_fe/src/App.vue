@@ -39,6 +39,7 @@ async function prompt2() {
   }
   
   reader.releaseLock();
+  console.log('Lock released...')
 }
 
 async function prompt() {
