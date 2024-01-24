@@ -15,9 +15,9 @@ output_parser = StrOutputParser()
 chain = {"topic": RunnablePassthrough()} | prompt | model | output_parser
 
 # streaming
-""" for chunk in chain.stream("ice cream"):
-    print(chunk, end="", flush=True) """
+for chunk in chain.stream("ice cream"):
+    print(chunk, end="", flush=True)
     
 # batching
-result = chain.batch(["ice cream", "spaghetti", "dumplings"])
-print(result)
+""" result = chain.batch(["ice cream", "spaghetti", "dumplings"])
+print(result) """
