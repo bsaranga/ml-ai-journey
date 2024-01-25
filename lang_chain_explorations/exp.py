@@ -1,3 +1,5 @@
+from operator import itemgetter
+
 # LAMBDAS
 
 """ foo = lambda x: x + 1
@@ -35,3 +37,6 @@ class MyClass:
 
     def set_my_field(self, value):
         self._my_field = value
+        
+foo = itemgetter(0,3,1,2)
+print(foo(['loo', 'far', 'boo', 'far']))

@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+from operator import itemgetter
 from langchain.schema import format_document
 from langchain_core.messages import AIMessage, HumanMessage, get_buffer_string
 from langchain_core.runnables import RunnableParallel
