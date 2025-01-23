@@ -1,3 +1,5 @@
-"""Linear algebra operations."""
+"""Learning linear algebra with torch"""
+import torch
 
-print("kjdhfksjdf")
+x = torch.arange(6).reshape(2, 3)
+print(x)
